@@ -11,10 +11,22 @@ class FriendshipTest(TestCase):
 
     def setUp(self):
         fake = Faker()
-        self.user1 = User.objects.create(username=fake.name(),dob=fake.date())
-        self.user2 = User.objects.create(username=fake.name(),dob=fake.date())
-        self.friendship1 = Friendship.objects.create(profile_1=self.user1,profile_2=self.user2)
-        self.friendship2 = Friendship.objects.create(profile_1=self.user2,profile_2=self.user1)
+        self.user1 = User.objects.create(
+            username=fake.name(),
+            dob=fake.date()
+        )
+        self.user2 = User.objects.create(
+            username=fake.name(),
+            dob=fake.date()
+        )
+        self.friendship1 = Friendship.objects.create(
+            profile_1=self.user1,
+            profile_2=self.user2
+        )
+        self.friendship2 = Friendship.objects.create(
+            profile_1=self.user2,
+            profile_2=self.user1
+        )
         return self.user1,self.user2,self.friendship1,self.friendship2
 
     def test_friendship_creation(self):
