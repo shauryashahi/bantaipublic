@@ -33,7 +33,7 @@ class User(models.Model):
         return User.objects.filter(id__in=friend_of_friends_ids)
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ['-created_at']
 
 class Friendship(models.Model):
     profile_1 = models.ForeignKey(User, on_delete=models.CASCADE, db_index = True,related_name='sender')

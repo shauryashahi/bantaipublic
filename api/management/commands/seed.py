@@ -15,10 +15,10 @@ MODE_REFRESH = 'refresh'
 MODE_CLEAR = 'clear'
 
 class Command(BaseCommand):
-    help = "seed database for testing and development."
+    help = 'seed database for testing and development.'
 
     def add_arguments(self, parser):
-        parser.add_argument('--mode', type=str, help="Mode")
+        parser.add_argument('--mode', type=str, help='Mode')
 
     def handle(self, *args, **options):
         self.stdout.write('seeding data...')
@@ -39,7 +39,7 @@ def create_users():
             username=fake.user_name()+str(uuid.uuid4()),
             name=fake.name(),
             dob=fake.date(),
-            gender="M",
+            gender='M',
             location=fake.city(),
             pic_url=fake.url(),
         )
