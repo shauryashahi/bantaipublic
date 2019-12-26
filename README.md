@@ -12,6 +12,7 @@
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
+* [Tests](#tests)
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
@@ -146,7 +147,7 @@ Cache-Control: no-cache
 ### Tests
 Run the following in the root directory to run testcases.
 ```sh
-python manage.py test
+python3 manage.py test
 ```
 <!-- LICENSE -->
 ## License
