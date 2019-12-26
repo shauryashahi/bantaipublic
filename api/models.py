@@ -6,16 +6,16 @@ def generate_user_id():
 
 class User(models.Model):
     username = models.TextField(unique=True)
-    user_id = models.CharField(max_length=255, blank=True)
-    name = models.CharField(max_length=60)
-    dob = models.DateField()
+    user_id = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=60,blank=True)
+    dob = models.DateField(blank=True)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
     )
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
-    location = models.TextField(max_length=60)
-    pic_url = models.TextField(max_length=140)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M',blank=True)
+    location = models.TextField(max_length=60,blank=True)
+    pic_url = models.TextField(max_length=140,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -26,6 +26,11 @@ class User(models.Model):
         if len(self.user_id.strip(" "))==0:
             self.user_id = generate_user_id()
         super(User, self).save(*args, **kwargs)
+
+    def friend_of_friends(self):
+        friend_ids = self.friends.all().values_list('id', flat=True)
+        friend_of_friends_ids = Friendship.objects.filter(profile_1_id__in=friend_ids).values_list('profile_2_id', flat=True)
+        return User.objects.filter(id__in=friend_of_friends_ids)
 
     class Meta:
         ordering = ["-created_at"]

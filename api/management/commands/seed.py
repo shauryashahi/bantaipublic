@@ -3,6 +3,7 @@ import random
 from faker import Faker
 from ...models import *
 from random import randint
+from multiprocessing import Pool
 
 # python manage.py seed --mode=refresh
 
@@ -30,29 +31,34 @@ def clear_data():
 
 
 def create_users():
-    #Creates an address object combining
-    print("Creating a user")
-    fake = Faker()
-    user = User(username=fake.user_name(),name=fake.name(), dob=fake.date(),gender="M",location=fake.city(),pic_url=fake.url())
-    user.save()
-    print("{} created.".format(user.username))
-    return user
+    #Creates 100 user object
+    for i in range(0,100):
+        print("Creating a user")
+        fake = Faker()
+        user = User(username=fake.user_name(),name=fake.name(), dob=fake.date(),gender="M",location=fake.city(),pic_url=fake.url())
+        try:
+            user.save()
+        except:
+            pass
+        print("{} created.".format(user.username))
 
 def create_friendships():
     #Creates a friendship object
-    print("Creating a friendship")
-    fake = Faker()
-    users = User.objects.all()
-    count = users.count()
-    random_index = randint(0, count - 1)
-    random_profile_1 = users[random_index]
-    random_index = randint(0, count - 1)
-    random_profile_2 = users[random_index]
-    user_ids = User.objects.values_list('id', flat=True)
-    friendship = Friendship(profile_1=random_profile_1,profile_2=random_profile_2)
-    friendship.save()
-    print("{} and {} are friends now.".format(friendship.profile_1,friendship.profile_2))
-    return friendship
+    for i in range(0,1000):
+        fake = Faker()
+        users = User.objects.all()
+        count = users.count()
+        random_index = randint(0, count - 1)
+        random_profile_1 = users[random_index]
+        random_index = randint(0, count - 1)
+        random_profile_2 = users[random_index]
+        user_ids = User.objects.values_list('id', flat=True)
+        friendship = Friendship(profile_1=random_profile_1,profile_2=random_profile_2)
+        try:
+            friendship.save()
+        except:
+            pass
+        print("{} and {} are friends now.".format(friendship.profile_1,friendship.profile_2))
 
 def run_seed(self, mode):
     #param mode: refresh / clear
@@ -60,8 +66,10 @@ def run_seed(self, mode):
     clear_data()
     if mode == MODE_CLEAR:
         return
+    processes = (0,1,2,3,4,5) 
+    pool = Pool(processes=3)
+    pool.map(run_process, processes)
 
-    # Creating 15 addresses
-    for i in range(100):
-        create_users()
-        create_friendships()
+def run_process(process):
+    create_users()
+    create_friendships()
