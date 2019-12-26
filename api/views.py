@@ -1,32 +1,26 @@
-from django.shortcuts import render, get_object_or_404
-from rest_framework import viewsets, generics
+from django.shortcuts import get_object_or_404
+from django.conf import settings
+from rest_framework import generics
 from .serializers import *
 from .models import *
-from django.http import HttpResponse
-from .utils import override_view_attributes
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+class FriendListViewSet(generics.ListAPIView):
     serializer_class = UserSerializer
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        override_view_attributes(self)
+    def get_queryset(self):
+        user = get_object_or_404(User,user_id=self.kwargs["user_id"])
+        return user.friends.all()
 
-class FriendshipViewSet(viewsets.ModelViewSet):
-    queryset = Friendship.objects.all()
-    serializer_class = FriendshipSerializer
+class FriendSuggestionsViewSet(generics.ListAPIView):
+    serializer_class = UserSerializer
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        override_view_attributes(self)
-
-def friend_list(request, user_id):
-    user = get_object_or_404(User,user_id=user_id)
-    friends = user.friends.all()
-    return HttpResponse(friends, content_type='application/json')
-
-def friend_suggestions(request,user_id):
-    user = get_object_or_404(User,user_id=user_id)
-    friend_of_friends = user.friend_of_friends
-    return HttpResponse(friend_of_friends, content_type='application/json')
+    def get_queryset(self):
+        user = get_object_or_404(User,user_id=self.kwargs["user_id"])
+        suggestions = user.friend_of_friends()
+        num_suggestions = len(suggestions)
+        if num_suggestions < settings.MAX_NUM_SUGGESTIONS:
+            random_suggestions = User.objects.exclude(
+                user_id=self.kwargs["user_id"]
+            ).order_by("?")[:(settings.MAX_NUM_SUGGESTIONS-num_suggestions)]
+            suggestions += random_suggestions
+        return suggestions[:(settings.MAX_NUM_SUGGESTIONS)]

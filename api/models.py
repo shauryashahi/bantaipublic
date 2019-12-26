@@ -2,7 +2,7 @@ from django.db import models
 import uuid
 
 def generate_user_id():
-    return str(uuid.uuid4()).split("-")[-1]
+    return str(uuid.uuid4())
 
 class User(models.Model):
     username = models.TextField(unique=True)

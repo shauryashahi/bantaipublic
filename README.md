@@ -63,88 +63,78 @@ python3 manage.py runserver
 
 ### Usage
 
-1. User list
+1. Friend Suggestions for a particular user
 ```
-GET /api/users HTTP/1.1
+GET /api/user/0c9054ed-729a-4acd-a70c-82086089b86d/suggestions HTTP/1.1
 Host: localhost:8000
-Content-Type: application/json
+Cache-Control: no-cache
 ```
 ```JSON
 {
-    "count": 200,
-    "next": "http://localhost:8000/api/users/?page=2",
+    "count": 50,
+    "next": null,
     "previous": null,
     "results": [
         {
-            "id": 1511,
-            "user_id": "b44d363fd13d",
-            "username": "aolsen",
-            "dob": "1978-05-23",
-            "name": "Jordan Rivers",
+            "id": 4241,
+            "user_id": "844a51cc-b32d-4b22-b42c-14b1cbc8a6ce",
+            "username": "jenniferlopez9d539231-e67f-4963-914a-0e6ab43244e4",
+            "dob": "2015-02-20",
+            "name": "Lisa Carroll",
             "gender": "M",
-            "location": "Bradshawfurt",
-            "pic_url": "https://mcintosh.com/"
+            "location": "Hansenfort",
+            "pic_url": "https://www.carlson.net/"
         },
         {
-            "id": 1509,
-            "user_id": "5e96fff684b3",
-            "username": "stephaniemoore",
-            "dob": "2016-03-06",
-            "name": "John Evans",
+            "id": 4223,
+            "user_id": "d2493e8a-1a2d-4c7f-8ed9-fa823b3ca2b3",
+            "username": "davistricia0da3cbcf-bf8c-42ad-b90c-349a73f93d65",
+            "dob": "2018-10-18",
+            "name": "Kathleen Jackson",
             "gender": "M",
-            "location": "Lake Emmamouth",
-            "pic_url": "https://griffin.biz/"
+            "location": "Karenton",
+            "pic_url": "http://www.nolan-ali.com/"
         },
         ..
       ]
 }
 ```
 
-2. Friendship list
+2. Friend list for a particular user.
 ```
-GET /api/friendships HTTP/1.1
+GET /api/user/0c9054ed-729a-4acd-a70c-82086089b86d/friendlist HTTP/1.1
 Host: localhost:8000
-Content-Type: application/json
+Cache-Control: no-cache
 ```
 ```JSON
 {
-    "count": 1047,
-    "next": "http://localhost:8000/api/friendships/?page=2",
+    "count": 111,
+    "next": "http://localhost:8000/api/user/0c9054ed-729a-4acd-a70c-82086089b86d/friendlist?limit=100&offset=100",
     "previous": null,
     "results": [
         {
-            "id": 1285,
-            "profile_1": 1169,
-            "profile_2": 1458,
-            "created_at": "2019-12-26T14:15:07.822202Z"
+            "id": 4243,
+            "user_id": "da23644b-46e9-4683-8bca-9fea4fc277f5",
+            "username": "kevinbishop6c6c560d-810c-44dd-a2a3-40afff0a37ef",
+            "dob": "1971-12-03",
+            "name": "Jose Flowers",
+            "gender": "M",
+            "location": "Jenniferfurt",
+            "pic_url": "https://bright.org/"
         },
         {
-            "id": 1286,
-            "profile_1": 1290,
-            "profile_2": 1246,
-            "created_at": "2019-12-26T14:15:07.863245Z"
+            "id": 4242,
+            "user_id": "1487f169-d144-4341-9d44-677464969337",
+            "username": "jleeebbae1f0-bd98-4bc0-83d6-17541aea9ac4",
+            "dob": "2015-05-11",
+            "name": "Jacqueline Reese",
+            "gender": "M",
+            "location": "Jennyland",
+            "pic_url": "http://www.reed-mejia.org/"
         },
-    ..
-  ]
+        ..
+      ]
 }
-```
-
-3. Friendlist for a particular user.
-```
-GET /api/user/5e96fff684b3/friendlist HTTP/1.1
-Host: localhost:8000
-Cache-Control: no-cache
-```
-```JSON
-```
-
-4. Friend Suggestions for a particular user.
-```
-GET /api/user/5e96fff684b3/suggestions HTTP/1.1
-Host: localhost:8000
-Cache-Control: no-cache
-```
-```JSON
 ```
 
 ### Tests

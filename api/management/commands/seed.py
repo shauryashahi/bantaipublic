@@ -3,7 +3,8 @@ import random
 from faker import Faker
 from ...models import *
 from random import randint
-from multiprocessing import Pool
+import itertools
+import uuid
 
 # python manage.py seed --mode=refresh
 
@@ -29,36 +30,37 @@ def clear_data():
     User.objects.all().delete()
     Friendship.objects.all().delete()
 
-
 def create_users():
-    #Creates 100 user object
-    for i in range(0,100):
-        print("Creating a user")
-        fake = Faker()
-        user = User(username=fake.user_name(),name=fake.name(), dob=fake.date(),gender="M",location=fake.city(),pic_url=fake.url())
-        try:
-            user.save()
-        except:
-            pass
-        print("{} created.".format(user.username))
+    #Creates 1000 user object
+    fake = Faker()
+    users = [
+        User(
+            user_id=uuid.uuid4(),
+            username=fake.user_name()+str(uuid.uuid4()),
+            name=fake.name(),
+            dob=fake.date(),
+            gender="M",
+            location=fake.city(),
+            pic_url=fake.url(),
+        )
+        for i in range(1000)
+    ]
+    User.objects.bulk_create(users)
 
 def create_friendships():
-    #Creates a friendship object
-    for i in range(0,1000):
-        fake = Faker()
-        users = User.objects.all()
-        count = users.count()
-        random_index = randint(0, count - 1)
-        random_profile_1 = users[random_index]
-        random_index = randint(0, count - 1)
-        random_profile_2 = users[random_index]
-        user_ids = User.objects.values_list('id', flat=True)
-        friendship = Friendship(profile_1=random_profile_1,profile_2=random_profile_2)
-        try:
-            friendship.save()
-        except:
-            pass
-        print("{} and {} are friends now.".format(friendship.profile_1,friendship.profile_2))
+    # 1000 users with 50 friendships each = 50000 friendships
+    users = User.objects.all()
+    all_possible_friendships = [
+        Friendship(
+            profile_1=friend1,
+            profile_2=friend2,
+        )
+        for friend1, friend2 in
+        itertools.combinations(users, 2)
+    ]
+    random.shuffle(all_possible_friendships)
+    friendships = all_possible_friendships[:50000]
+    Friendship.objects.bulk_create(friendships)
 
 def run_seed(self, mode):
     #param mode: refresh / clear
@@ -66,10 +68,6 @@ def run_seed(self, mode):
     clear_data()
     if mode == MODE_CLEAR:
         return
-    processes = (0,1,2,3,4,5) 
-    pool = Pool(processes=3)
-    pool.map(run_process, processes)
 
-def run_process(process):
     create_users()
     create_friendships()
