@@ -32,26 +32,28 @@ To get a local copy up and running follow these simple example steps.
 ```sh
 git clone https://github.com/your_username_/Project-Name.git
 ```
-2. Setup PostgreSQL
+2. Start a virtualenv and install requirements
+```sh
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+3. Setup PostgreSQL
 - Django supports PostgreSQL 9.0 and higher.
 - In case you do not have Postgres on your system already, I would recommend you downloading and installing it from the package app on their site.
-3. Install psycopg2
+4. Install psycopg2
 ```sh
 pip install psycopg2
-python -c "import psycopg2"
-```
-4. Install Django
-```sh
-pip install Django
+python3 -c "import psycopg2"
 ```
 5. Run migrations
 ```sh
-python manage.py makemigrations
-python manage.py migrate
+pytho3 manage.py makemigrations
+python3 manage.py migrate
 ```
 6. Start the Server
 ```sh
-python manage.py runserver
+python3 manage.py runserver
 ```
 
 ### Usage

@@ -1,0 +1,11 @@
+asgiref==3.2.3
+coverage==3.6
+Django==3.0.1
+djangorestframework==3.11.0
+Faker==3.0.0
+psycopg2==2.8.4
+python-dateutil==2.8.1
+pytz==2019.3
+six==1.13.0
+sqlparse==0.3.0
+text-unidecode==1.3
