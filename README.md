@@ -1,11 +1,8 @@
 # bantaipublic
 
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![Contributors](https://img.shields.io/github/contributors/shauryashahi/bantaipublic.svg)](https://GitHub.com/shauryashahi/bantaipublic/graphs/contributors/)
+[![Stargazers](https://img.shields.io/github/stars/shauryashahi/bantaipublic.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/shauryashahi/bantaipublic/stargazers/)
+[![Issues](https://img.shields.io/github/issues/shauryashahi/bantaipublic.svg)](https://GitHub.com/shauryashahi/bantaipublic/issues/)
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
