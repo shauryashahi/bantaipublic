@@ -4,6 +4,7 @@ from faker import Faker
 from ...models import User, Friendship
 import itertools
 import uuid
+from django.conf import settings
 
 # python manage.py seed --mode=refresh
 
@@ -41,7 +42,7 @@ def create_users():
             username=fake.user_name()+str(uuid.uuid4()),
             name=fake.name(),
             dob=fake.date(),
-            gender='M',
+            gender=random.choice(settings.GENDER_CHOICES),
             location=fake.city(),
             pic_url=fake.url(),
         )
