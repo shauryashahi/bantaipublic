@@ -50,20 +50,25 @@ pip install -r requirements.txt
 pip install psycopg2
 python3 -c "import psycopg2"
 ```
-5. Run migrations and seed the database
+5. Update DB User in bantaipublic/settings.py
+```py
+POSTGRES_USER='YOUR-PG-USER-NAME'
+POSTGRES_PASS='YOUR-PG-PASS'
+```
+6. Run migrations and seed the database
 ```sh
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py seed
 ```
-6. Start the Server
+7. Start the Server
 ```sh
 python3 manage.py runserver
 ```
 
 ### Usage
 
-1. Friend Suggestions for a particular user
+1. Friend Suggestions for a particular user (ordered by mutual friends)
 ```
 GET /api/user/0c9054ed-729a-4acd-a70c-82086089b86d/suggestions HTTP/1.1
 Host: localhost:8000

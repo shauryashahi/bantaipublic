@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from api.models import *
-from api.views import *
+from api.views import FriendListViewSet, FriendSuggestionsViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,18 +1,18 @@
 from django.core.management.base import BaseCommand
 import random
 from faker import Faker
-from ...models import *
-from random import randint
+from ...models import User, Friendship
 import itertools
 import uuid
 
 # python manage.py seed --mode=refresh
 
-# Clear all data and creates addresses
+# Clear all data and create objects
 MODE_REFRESH = 'refresh'
 
 # Clear all data and do not create any object
 MODE_CLEAR = 'clear'
+
 
 class Command(BaseCommand):
     help = 'seed database for testing and development.'
@@ -25,13 +25,15 @@ class Command(BaseCommand):
         run_seed(self, options['mode'])
         self.stdout.write('done.')
 
+
 def clear_data():
-    #Deletes all the table data
+    # Deletes all the table data
     User.objects.all().delete()
     Friendship.objects.all().delete()
 
+
 def create_users():
-    #Creates 1000 user object
+    # Creates 1000 user object
     fake = Faker()
     users = [
         User(
@@ -46,6 +48,7 @@ def create_users():
         for i in range(1000)
     ]
     User.objects.bulk_create(users)
+
 
 def create_friendships():
     # 1000 users with 50 friendships each = 50000 friendships
@@ -62,8 +65,9 @@ def create_friendships():
     friendships = all_possible_friendships[:50000]
     Friendship.objects.bulk_create(friendships)
 
+
 def run_seed(self, mode):
-    #param mode: refresh / clear
+    # param mode: refresh / clear
     # Clear data from tables
     clear_data()
     if mode == MODE_CLEAR:

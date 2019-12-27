@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+POSTGRES_USER = 'shaurya'
+
+POSTGRES_PASS = 'privacy'
 
 # Application definition
 
@@ -79,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bantaigiri',
-        'USER': 'shaurya',
-        'PASSWORD': 'privacy',
+        'USER': POSTGRES_USER,
+        'PASSWORD': POSTGRES_PASS,
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -92,16 +95,20 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+        'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -126,8 +133,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'DEFAULT_PAGINATION_CLASS':
+    'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100
 }
 
 MAX_NUM_SUGGESTIONS = 50
+GENDER_CHOICES = (
+    ('male', 'Male'),
+    ('female', 'Female'),
+    ('other', 'Other')
+)

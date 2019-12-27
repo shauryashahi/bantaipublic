@@ -1,21 +1,23 @@
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from rest_framework import generics
-from .serializers import *
-from .models import *
+from .serializers import UserSerializer
+from .models import User
+
 
 class FriendListViewSet(generics.ListAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        user = get_object_or_404(User,user_id=self.kwargs['user_id'])
+        user = get_object_or_404(User, user_id=self.kwargs['user_id'])
         return user.friends.all()
+
 
 class FriendSuggestionsViewSet(generics.ListAPIView):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        user = get_object_or_404(User,user_id=self.kwargs['user_id'])
+        user = get_object_or_404(User, user_id=self.kwargs['user_id'])
         suggestions = user.friend_of_friends()
         num_suggestions = len(suggestions)
         if num_suggestions < settings.MAX_NUM_SUGGESTIONS:
